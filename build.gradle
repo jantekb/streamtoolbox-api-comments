@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+task doc(type: Javadoc) {
+  source 'src'
+  destinationDir file('doc')
+  title 'Comments on the Wowza Streaming Engine Server Side API'
+  options.overview 'extra/overview.html'
+  options.header 'This is not the official API, just comments to that.'
+  options.footer = "Copyright &copy; 2015 <a href=\"https://wowzatoolbox.com\">Wowzatoolbox.com</a>. \"Wowza&reg;\", \"Wowza Streaming Server&reg;\" are registered trade marks of Wowza Media Systems, LLC"
+  
+}
+
+clean {
+	delete 'doc'
+}
