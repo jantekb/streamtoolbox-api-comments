@@ -52,7 +52,7 @@ public class ModuleBase {
 	 * This method is invoked upon every HTTP request that comes in. This means separate invocation for
 	 * the m3u8 file, and an other one one for the chunklist file.
 	 * 
-	 * The passed reqContext has a {@link com.wowza.wms.httpstreamer.model.IHTTPStreamerRequestContext.getRequestType()} method that you can call and check what happened exactly.
+	 * The passed reqContext has a {@link com.wowza.wms.httpstreamer.model.IHTTPStreamerRequestContext.#getRequestType()} method that you can call and check what happened exactly.
 	 * 
 	 * @param httpSession an object representing the known details about the session
 	 * @param reqContext a context object representing some other details about the call
@@ -126,7 +126,7 @@ public class ModuleBase {
 	/**
 	 * This is called upon stream creation. Be careful <code>stream.getName()</code> will return null!
 	 * It is the point where you can add your {@link com.wowza.wms.stream.IMediaStreamActionNotify} instance on the stream by calling
-	 * {@link com.wowza.wms.stream.IMediaStream.addClientListener()}
+	 * {@link com.wowza.wms.stream.IMediaStream.#addClientListener()}
 	 * 	@param stream the stream object
 	 */
 	public void onStreamCreate(IMediaStream stream) {
@@ -170,7 +170,7 @@ public class ModuleBase {
 	 * This is method can be used to extract data from the {@link com.wowza.wms.amf.AMFDataList} objects that you get in play/connect/publish methods.
 	 * There are some constants defined in {@link ModuleBase} that are useful: {@link PARAM1}, {@link PARAM2}, {@link PARAM3}, which map to some other integers.
 	 * 
-	 *   In {@link #play(IClient, RequestFunction, AMFDataList)} and {@link #publish(IClient, RequestFunction, AMFDataList), you can extract the stream name as string with {@link PARAM1}
+	 *   In {@link #play(IClient, RequestFunction, AMFDataList)} and {@link #publish(IClient, RequestFunction, AMFDataList)}, you can extract the stream name as string with {@link PARAM1}
 	 *   
 	 * @param paramAMFDataList the object from which you want to extract the data
 	 * @param paramInt the identifier of the parameter that you need.
@@ -186,8 +186,19 @@ public class ModuleBase {
 	 * @param paramObject from the examples, it looks like you just need to pass your own module instance, so pass literally {@code this}
 	 * @param paramIClient pass on the {@link IClient} instance that you have received in your lifecycle method
 	 * @param paramRequestFunction pass on the {@link RequestFunction} instance that you have received in your lifecycle method
-	 * @param paramAMFDataList pass on the {@link paramAMFDataList} instance that you have received in your lifecycle method
+	 * @param paramAMFDataList pass on the {@link AMFDataList} instance that you have received in your lifecycle method
 	 */
 	protected static void invokePrevious(Object paramObject, IClient paramIClient, RequestFunction paramRequestFunction, AMFDataList paramAMFDataList) {
 	}
+	
+	public static final int PARAMMETHODNAME = 0;
+	
+	/**
+	 * In case of {@link #play(IClient, RequestFunction, AMFDataList)} and {@link #publish(IClient, RequestFunction, AMFDataList)} this parameter carries the stream name.
+	 */
+	public static final int PARAM1 = 3;
+	
+	public static final int PARAM2 = 4;
+	
+	public static final int PARAM3 = 5;
 }
