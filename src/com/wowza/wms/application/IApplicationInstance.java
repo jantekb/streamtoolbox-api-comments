@@ -54,552 +54,591 @@ import com.wowza.wms.vhost.IVHost;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.WMSReadWriteLock;
 
 /**
- * A runtime instance of a Wowza application created dynamicall. By default each application will have a default instance called <code>_definst_</code>.
+ * A runtime instance of a Wowza application created dynamically. By default each application will have a default instance called <code>_definst_</code>.
  * Using this interface, you can get the name of your application as well as the instance name. This is the door to access to the configuration properties in the Application.xml. 
  *
  */
 public interface IApplicationInstance {
 
 	/**
-	 * Shut down a particular RTMP client. (Not any other!)
-	 * @param paramIClient the client that you want to shut down
+	 * Attach an instence of {@see IClientNotify} to this application instance, which can be used to get notified when a new client is connected, disconnected, accepted or rejected.
+	 * Be careful, this only works for RTMP (Flash) clients.
+	 * 
+	 * @param clientListener listener instance to add
 	 */
-	public abstract void shutdownClient(IClient paramIClient);
+	public void addClientListener(IClientNotify clientListener);
 
-	public abstract void shutdown(boolean paramBoolean1, boolean paramBoolean2);
+	public void addDvrRecorderListener(ILiveStreamDvrRecorderActionNotify paramILiveStreamDvrRecorderActionNotify);
+
+	public void addDvrStreamManagerListener(IDvrStreamManagerActionNotify paramIDvrStreamManagerActionNotify);
+
+	public void addHTTPListener(IHTTPSessionNotify paramIHTTPSessionNotify);
+
+	public void addHTTPStreamerSession(IHTTPStreamerSession paramIHTTPStreamerSession);
+
+	public void addLiveStreamPacketizerListener(ILiveStreamPacketizerActionNotify paramILiveStreamPacketizerActionNotify);
+
+	public void addLiveStreamTranscoderListener(ILiveStreamTranscoderNotify paramILiveStreamTranscoderNotify);
+
+	public void addMediaCasterListener(IMediaCasterNotify paramIMediaCasterNotify);
+
+	public void addMediaCasterListener(IMediaCasterNotify2 paramIMediaCasterNotify2);
+
+	public void addMediaReaderListener(IMediaReaderActionNotify paramIMediaReaderActionNotify);
+
+	public void addMediaStreamListener(IMediaStreamNotify paramIMediaStreamNotify);
+
+	public void addMediaWriterListener(IMediaWriterActionNotify paramIMediaWriterActionNotify);
+
+	public void addModuleListener(IModuleNotify paramIModuleNotify);
+
+	public void addPlayStreamByName(IMediaStream paramIMediaStream, String paramString);
+
+	public void addPublisher(Publisher paramPublisher);
+
+	public void addPushPublishSession(IMediaStream paramIMediaStream, IPushPublishSession paramIPushPublishSession);
+
+	public void addPushPublishSessionListener(IPushPublishSessionNotify paramIPushPublishSessionNotify);
+
+	public void addRTPIncomingDatagramPortAll();
+
+	public void addRTPIncomingDatagramPortRange(int paramInt1, int paramInt2);
+
+	public void addRTPListener(IRTPSessionNotify paramIRTPSessionNotify);
+
+	public void addRTPSession(RTPSession paramRTPSession);
+
+	public void addSharedObjectListener(ISharedObjectNotify paramISharedObjectNotify, boolean paramBoolean);
+
+	public void broadcastMsg(List<IClient> paramList, String paramString);
+
+	public void broadcastMsg(List<IClient> paramList, String paramString, Object[] paramArrayOfObject);
+
+	public void broadcastMsg(String paramString, Object[] paramArrayOfObject);
+
+	public boolean containsDvrRecorder(String paramString);
+
+	public boolean containsHTTPStreamer(String paramString);
+
+	public boolean containsLiveStreamPacketizer(String paramString);
+
+	public boolean containsLiveStreamTranscoder(String paramString);
+
+	public String decodeStorageDir(String paramString);
+
+	public String[] getAllowDomains();
 
 	/**
 	 * This method allows you to navigate one level upwards and access the properties of the actual application that this interface is an instance of.
-	 * @return the {@see IApplication} that this is an instance of
+	 * @return the IApplication that this is an instance of
 	 */
-	public abstract IApplication getApplication();
+	public IApplication getApplication();
+
+	public int getApplicationInstanceTouchTimeout();
+
+	public int getApplicationTimeout();
+
+	public IClient getClient(int paramInt);
+
+	public IClient getClientById(int paramInt);
+
+	public int getClientCount();
+
+	public int getClientCountTotal();
+
+	public int getClientIdleFrequency();
+
+	public List<IClient> getClients();
+
+	public WMSReadWriteLock getClientsLockObj();
+
+	public ConnectionCounter getConnectionCounter();
+
+	public ConnectionCounterSimple getConnectionCounter(int paramInt);
+
+	public String getContextStr();
+
+	public String getDateStarted();
+
+	public DvrApplicationContext getDvrApplicationContext();
+
+	public WMSProperties getDvrProperties();
+
+	public String getDvrRecorderList();
+
+	public IHTTPStreamerApplicationContext getHTTPStreamerApplicationContext(String paramString, boolean paramBoolean);
+
+	public String getHTTPStreamerList();
+
+	public WMSProperties getHTTPStreamerProperties();
+
+	public int getHTTPStreamerSessionCount();
+
+	public int getHTTPStreamerSessionCount(int paramInt);
+
+	public int getHTTPStreamerSessionCount(int paramInt, String paramString);
+
+	public int getHTTPStreamerSessionCount(String paramString);
+
+	public Map<String, Integer> getHTTPStreamerSessionCountsByName(int paramInt);
+
+	public List<IHTTPStreamerSession> getHTTPStreamerSessions();
+
+	public List<IHTTPStreamerSession> getHTTPStreamerSessions(int paramInt);
+
+	public List<IHTTPStreamerSession> getHTTPStreamerSessions(int paramInt, String paramString);
+
+	public List<IHTTPStreamerSession> getHTTPStreamerSessions(String paramString);
+
+	public IOPerformanceCounter getIOPerformanceCounter();
+
+	public IOPerformanceCounter getIOPerformanceCounter(int paramInt);
+
+	public long getLastTouchTime();
+
+	public ILiveStreamDvrRecorderControl getLiveStreamDvrRecorderControl();
+
+	public ILiveStreamPacketizerControl getLiveStreamPacketizerControl();
+
+	public String getLiveStreamPacketizerList();
+
+	public WMSProperties getLiveStreamPacketizerProperties();
+
+	public ILiveStreamTranscoderControl getLiveStreamTranscoderControl();
+
+	public String getLiveStreamTranscoderList();
+
+	public WMSProperties getManagerProperties();
+
+	public int getMaximumPendingReadBytes();
+
+	public int getMaximumPendingWriteBytes();
+
+	public int getMaximumSetBufferTime();
+
+	public int getMaxStorageDirDepth();
+
+	public List<MediaCacheSourceFilter> getMediaCacheFilters();
+
+	public WMSProperties getMediaCasterProperties();
+
+	public int getMediacasterRTPRTSPRTPTransportMode();
+
+	public MediaCasterStreamMap getMediaCasterStreams();
+
+	public IMediaCasterValidateMediaCaster getMediaCasterValidator();
+
+	public IMediaListProvider getMediaListProvider();
+
+	public int getMediaReaderContentType(String paramString);
+
+	public WMSProperties getMediaReaderProperties();
+
+	public WMSProperties getMediaWriterProperties();
+
+	public ModuleFunctions getModFunctions();
+
+	public Object getModuleInstance(String paramString);
+
+	public ModuleList getModuleList();
 
 	/**
 	 * The name of the application instance, which is by default {@code _definst_}.
 	 * @return
 	 */
-	public abstract String getName();
+	public String getName();
 
-	public abstract void setName(String paramString);
+	public int getPingTimeout();
 
-	public abstract MediaStreamMap getStreams();
+	public int getPlayStreamCount(String paramString);
 
-	public abstract IVHost getVHost();
+	public Map<String, Integer> getPlayStreamCountsByName();
 
-	public abstract WMSProperties getProperties();
+	public List<IMediaStream> getPlayStreamsByName(String paramString);
 
-	public abstract WMSProperties getManagerProperties();
+	public WMSProperties getProperties();
 
-	public abstract String getStreamType();
+	public boolean[] getProtocolUsage();
 
-	public abstract void setStreamType(String paramString);
+	public void getProtocolUsage(boolean[] paramArrayOfBoolean);
 
-	public abstract boolean isAcceptConnection();
+	public int getPublisherCount();
 
-	public abstract void setAcceptConnection(boolean paramBoolean);
+	public List<Publisher> getPublishers();
 
-	public abstract int getClientCountTotal();
+	public List<String> getPublishStreamNames();
 
-	public abstract void incClientCountTotal();
+	public int getPushPublishSessionCount();
 
-	public abstract int getClientCount();
+	public List<IPushPublishSession> getPushPublishSessions();
 
-	public abstract IClient getClientById(int paramInt);
+	public List<IPushPublishSession> getPushPublishSessions(IMediaStream paramIMediaStream);
 
-	public abstract List<IClient> getClients();
+	public String getRepeaterOriginUrl();
 
-	public abstract IClient getClient(int paramInt);
+	public String getRepeaterQueryString();
 
-	public abstract ISharedObjects getSharedObjects();
+	public String getRsoStorageDir();
 
-	public abstract ISharedObjects getSharedObjects(boolean paramBoolean);
+	public String getRsoStoragePath();
 
-	public abstract void addClientListener(IClientNotify paramIClientNotify);
+	public int getRTPAVSyncMethod();
 
-	public abstract void removeClientListener(IClientNotify paramIClientNotify);
+	public int getRTPIdleFrequency();
 
-	public abstract void addMediaStreamListener(IMediaStreamNotify paramIMediaStreamNotify);
+	public int getRTPMaxRTCPWaitTime();
 
-	public abstract void removeMediaStreamListener(IMediaStreamNotify paramIMediaStreamNotify);
+	public String getRTPPlayAuthenticationMethod();
 
-	public abstract void addSharedObjectListener(ISharedObjectNotify paramISharedObjectNotify, boolean paramBoolean);
+	public WMSProperties getRTPProperties();
 
-	public abstract void removeSharedObjectListener(ISharedObjectNotify paramISharedObjectNotify, boolean paramBoolean);
+	public String getRTPPublishAuthenticationMethod();
 
-	public abstract void addMediaCasterListener(IMediaCasterNotify paramIMediaCasterNotify);
+	public int getRTPSessionCount();
 
-	public abstract void addMediaCasterListener(IMediaCasterNotify2 paramIMediaCasterNotify2);
+	public int getRTPSessionCount(String paramString);
 
-	public abstract void removeMediaCasterListener(IMediaCasterNotify paramIMediaCasterNotify);
+	public Map<String, Integer> getRTPSessionCountsByName();
 
-	public abstract ConnectionCounter getConnectionCounter();
+	public List<RTPSession> getRTPSessions();
 
-	public abstract ConnectionCounterSimple getConnectionCounter(int paramInt);
+	public List<RTPSession> getRTPSessions(String paramString);
 
-	public abstract String getDateStarted();
+	public String getRTSPBindIpAddress();
 
-	public abstract String getTimeRunning();
+	public String getRTSPConnectionAddressType();
 
-	public abstract double getTimeRunningSeconds();
+	public String getRTSPConnectionIpAddress();
 
-	public abstract void broadcastMsg(List<IClient> paramList, String paramString);
+	public int getRTSPMaximumPendingWriteBytes();
 
-	public abstract void broadcastMsg(List<IClient> paramList, String paramString, Object[] paramArrayOfObject);
+	public String getRTSPOriginAddressType();
 
-	public abstract void broadcastMsg(String paramString, Object[] paramArrayOfObject);
+	public String getRTSPOriginIpAddress();
 
-	public abstract IOPerformanceCounter getIOPerformanceCounter();
+	public int getRTSPSessionTimeout();
 
-	public abstract IOPerformanceCounter getIOPerformanceCounter(int paramInt);
+	public String getSharedObjectReadAccess();
 
-	public abstract void addPlayStreamByName(IMediaStream paramIMediaStream, String paramString);
+	public ISharedObjects getSharedObjects();
 
-	public abstract void removePlayStreamByName(IMediaStream paramIMediaStream);
+	public ISharedObjects getSharedObjects(boolean paramBoolean);
 
-	public abstract Map<String, Integer> getPlayStreamCountsByName();
+	public String getSharedObjectWriteAccess();
 
-	public abstract int getPlayStreamCount(String paramString);
+	public String getStreamAudioSampleAccess();
 
-	public abstract List<IMediaStream> getPlayStreamsByName(String paramString);
+	public int getStreamCount();
 
-	public abstract MediaCasterStreamMap getMediaCasterStreams();
+	public IMediaStreamFileMapper getStreamFileMapper();
 
-	public abstract int getStreamCount();
+	public String getStreamKeyDir();
 
-	public abstract ModuleFunctions getModFunctions();
+	public String getStreamKeyPath();
 
-	public abstract void addModuleListener(IModuleNotify paramIModuleNotify);
+	public IMediaStreamNameAliasProvider getStreamNameAliasProvider();
 
-	public abstract void removeModuleListener(IModuleNotify paramIModuleNotify);
+	public WMSProperties getStreamProperties();
 
-	public abstract ModuleList getModuleList();
+	public String getStreamReadAccess();
 
-	public abstract Object getModuleInstance(String paramString);
+	public WMSProperties getStreamRecorderProperties();
 
-	public abstract int getApplicationTimeout();
+	public MediaStreamMap getStreams();
 
-	public abstract void setApplicationTimeout(int paramInt);
+	public String getStreamStorageDir();
 
-	public abstract int getPingTimeout();
+	public String getStreamStoragePath();
 
-	public abstract void setPingTimeout(int paramInt);
+	public String getStreamType();
 
-	public abstract int getValidationFrequency();
+	public String getStreamVideoSampleAccess();
 
-	public abstract void setValidationFrequency(int paramInt);
+	public String getStreamWriteAccess();
 
-	public abstract int getMaximumPendingWriteBytes();
+	public WMSProperties getTimedTextProperties();
 
-	public abstract void setMaximumPendingWriteBytes(int paramInt);
+	public String getTimeRunning();
 
-	public abstract int getMaximumPendingReadBytes();
+	public double getTimeRunningSeconds();
 
-	public abstract void setMaximumPendingReadBytes(int paramInt);
+	public LiveStreamTranscoderApplicationContext getTranscoderApplicationContext();
 
-	public abstract void setMaximumSetBufferTime(int paramInt);
+	public WMSProperties getTranscoderProperties();
 
-	public abstract int getMaximumSetBufferTime();
+	public int getValidationFrequency();
 
-	public abstract String getRepeaterOriginUrl();
+	public IVHost getVHost();
 
-	public abstract void setRepeaterOriginUrl(String paramString);
+	public String getVODTimedTextProviderList();
 
-	public abstract String getRepeaterQueryString();
+	public List<String> getVODTimedTextProviderSet();
 
-	public abstract void setRepeaterQueryString(String paramString);
+	public void incClientCountTotal();
 
-	public abstract String[] getAllowDomains();
+	public boolean isAcceptConnection();
 
-	public abstract void setAllowDomains(String[] paramArrayOfString);
+	public boolean isDebugAppTimeout();
 
-	public abstract void parseAllowDomains(String paramString);
+	public boolean isMediaCacheSourceAllowed(String paramString);
 
-	public abstract int getClientIdleFrequency();
+	public boolean isRTPIncomingDatagramPortValid(int paramInt);
 
-	public abstract void setClientIdleFrequency(int paramInt);
+	public boolean isValidateFMLEConnections();
 
-	public abstract int getRTPIdleFrequency();
+	public void notifyDvrStreamManagerCreate(IDvrStreamManager paramIDvrStreamManager, String paramString);
 
-	public abstract void setRTPIdleFrequency(int paramInt);
+	public void notifyDvrStreamManagerDestroy(IDvrStreamManager paramIDvrStreamManager);
 
-	public abstract String getStreamStorageDir();
+	public void notifyDvrStreamManagerInit(IDvrStreamManager paramIDvrStreamManager);
 
-	public abstract void setStreamStorageDir(String paramString);
+	public void notifyHTTPSessionCreate(IHTTPStreamerSession paramIHTTPStreamerSession);
 
-	public abstract String getStreamKeyDir();
+	public void notifyHTTPSessionDestroy(IHTTPStreamerSession paramIHTTPStreamerSession);
 
-	public abstract void setStreamKeyDir(String paramString);
+	public void notifyLiveStreamDvrRecorderCreate(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder, String paramString);
 
-	public abstract String getRsoStorageDir();
+	public void notifyLiveStreamDvrRecorderDestroy(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder);
 
-	public abstract void setRsoStorageDir(String paramString);
+	public void notifyLiveStreamDvrRecorderInit(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder, String paramString);
 
-	public abstract String getStreamKeyPath();
+	public void notifyLiveStreamPacketizerCreate(ILiveStreamPacketizer paramILiveStreamPacketizer, String paramString);
 
-	public abstract String getStreamStoragePath();
+	public void notifyLiveStreamPacketizerDestroy(ILiveStreamPacketizer paramILiveStreamPacketizer);
 
-	public abstract String getRsoStoragePath();
+	public void notifyLiveStreamPacketizerInit(ILiveStreamPacketizer paramILiveStreamPacketizer, String paramString);
 
-	public abstract String getStreamVideoSampleAccess();
+	public void notifyLiveStreamTranscoderCreate(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
 
-	public abstract void setStreamVideoSampleAccess(String paramString);
+	public void notifyLiveStreamTranscoderDestroy(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
 
-	public abstract String getStreamAudioSampleAccess();
+	public void notifyLiveStreamTranscoderInit(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
 
-	public abstract void setStreamAudioSampleAccess(String paramString);
+	public void notifyMediaReaderClose(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
 
-	public abstract String getStreamReadAccess();
+	public void notifyMediaReaderCreate(IMediaReader paramIMediaReader);
 
-	public abstract void setStreamReadAccess(String paramString);
+	public void notifyMediaReaderExtractMetaData(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
 
-	public abstract String getStreamWriteAccess();
+	public void notifyMediaReaderInit(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
 
-	public abstract void setStreamWriteAccess(String paramString);
+	public void notifyMediaReaderOpen(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
 
-	public abstract String getSharedObjectReadAccess();
+	public void notifyMediaWriterOnFLVAddMetadata(IMediaStream paramIMediaStream, Map<String, Object> paramMap);
 
-	public abstract void setSharedObjectReadAccess(String paramString);
+	public void notifyMediaWriterOnWriteComplete(IMediaStream paramIMediaStream, File paramFile);
 
-	public abstract String getSharedObjectWriteAccess();
-
-	public abstract void setSharedObjectWriteAccess(String paramString);
-
-	public abstract String getRTPPublishAuthenticationMethod();
-
-	public abstract void setRTPPublishAuthenticationMethod(String paramString);
-
-	public abstract String getRTPPlayAuthenticationMethod();
-
-	public abstract void setRTPPlayAuthenticationMethod(String paramString);
-
-	public abstract int getRTPAVSyncMethod();
-
-	public abstract void setRTPAVSyncMethod(int paramInt);
-
-	public abstract int getRTPMaxRTCPWaitTime();
-
-	public abstract void setRTPMaxRTCPWaitTime(int paramInt);
-
-	public abstract List<RTPSession> getRTPSessions(String paramString);
-
-	public abstract List<RTPSession> getRTPSessions();
-
-	public abstract Map<String, Integer> getRTPSessionCountsByName();
-
-	public abstract int getRTPSessionCount(String paramString);
-
-	public abstract int getRTPSessionCount();
-
-	public abstract void addRTPSession(RTPSession paramRTPSession);
-
-	public abstract void registerPlayRTPSession(RTPSession paramRTPSession);
-
-	public abstract void removeRTPSession(RTPSession paramRTPSession);
-
-	public abstract WMSReadWriteLock getClientsLockObj();
-
-	public abstract WMSProperties getStreamProperties();
-
-	public abstract WMSProperties getMediaCasterProperties();
-
-	public abstract WMSProperties getMediaReaderProperties();
-
-	public abstract WMSProperties getMediaWriterProperties();
-
-	public abstract WMSProperties getRTPProperties();
-
-	public abstract WMSProperties getLiveStreamPacketizerProperties();
-
-	public abstract WMSProperties getTranscoderProperties();
-
-	public abstract WMSProperties getHTTPStreamerProperties();
-
-	public abstract int getMaxStorageDirDepth();
-
-	public abstract void setMaxStorageDirDepth(int paramInt);
-
-	public abstract IMediaStreamFileMapper getStreamFileMapper();
-
-	public abstract void setStreamFileMapper(IMediaStreamFileMapper paramIMediaStreamFileMapper);
-
-	public abstract String decodeStorageDir(String paramString);
-
-	public abstract String getLiveStreamPacketizerList();
-
-	public abstract String getHTTPStreamerList();
-
-	public abstract void setLiveStreamPacketizerList(String paramString);
-
-	public abstract void setHTTPStreamerList(String paramString);
-
-	public abstract boolean containsHTTPStreamer(String paramString);
-
-	public abstract boolean containsLiveStreamPacketizer(String paramString);
-
-	public abstract boolean containsDvrRecorder(String paramString);
-
-	public abstract String getVODTimedTextProviderList();
-
-	public abstract void setVODTimedTextProviderList(String paramString);
-
-	public abstract List<String> getVODTimedTextProviderSet();
-
-	public abstract WMSProperties getTimedTextProperties();
-
-	public abstract IMediaStreamNameAliasProvider getStreamNameAliasProvider();
-
-	public abstract void setStreamNameAliasProvider(IMediaStreamNameAliasProvider paramIMediaStreamNameAliasProvider);
-
-	public abstract List<Publisher> getPublishers();
-
-	public abstract int getPublisherCount();
-
-	public abstract void addPublisher(Publisher paramPublisher);
-
-	public abstract void removePublisher(Publisher paramPublisher);
-
-	public abstract List<IHTTPStreamerSession> getHTTPStreamerSessions(int paramInt, String paramString);
-
-	public abstract List<IHTTPStreamerSession> getHTTPStreamerSessions(String paramString);
-
-	public abstract Map<String, Integer> getHTTPStreamerSessionCountsByName(int paramInt);
-
-	public abstract int getHTTPStreamerSessionCount(String paramString);
-
-	public abstract int getHTTPStreamerSessionCount(int paramInt, String paramString);
-
-	public abstract List<IHTTPStreamerSession> getHTTPStreamerSessions();
-
-	public abstract List<IHTTPStreamerSession> getHTTPStreamerSessions(int paramInt);
-
-	public abstract int getHTTPStreamerSessionCount();
-
-	public abstract int getHTTPStreamerSessionCount(int paramInt);
-
-	public abstract void addHTTPStreamerSession(IHTTPStreamerSession paramIHTTPStreamerSession);
-
-	public abstract void removeHTTPStreamerSession(IHTTPStreamerSession paramIHTTPStreamerSession);
-
-	public abstract IHTTPStreamerApplicationContext getHTTPStreamerApplicationContext(String paramString, boolean paramBoolean);
-
-	public abstract void addRTPIncomingDatagramPortRange(int paramInt1, int paramInt2);
-
-	public abstract void addRTPIncomingDatagramPortAll();
-
-	public abstract boolean isRTPIncomingDatagramPortValid(int paramInt);
-
-	public abstract String readAppInstConfig(String paramString);
-
-	public abstract boolean writeAppInstConfig(String paramString1, String paramString2);
-
-	public abstract ILiveStreamPacketizerControl getLiveStreamPacketizerControl();
-
-	public abstract void setLiveStreamPacketizerControl(ILiveStreamPacketizerControl paramILiveStreamPacketizerControl);
-
-	public abstract boolean resetMediaCasterStream(String paramString);
-
-	public abstract boolean resetMediaCasterStream(String paramString1, String paramString2);
-
-	public abstract boolean startMediaCasterStream(String paramString1, String paramString2, String paramString3);
-
-	public abstract boolean startMediaCasterStream(String paramString1, String paramString2);
-
-	public abstract void stopMediaCasterStream(String paramString);
-
-	public abstract String getContextStr();
-
-	public abstract List<String> getPublishStreamNames();
-
-	public abstract void addMediaWriterListener(IMediaWriterActionNotify paramIMediaWriterActionNotify);
-
-	public abstract void removeMediaWriterListener(IMediaWriterActionNotify paramIMediaWriterActionNotify);
-
-	public abstract void notifyMediaWriterOnWriteComplete(IMediaStream paramIMediaStream, File paramFile);
-
-	public abstract void notifyMediaWriterOnFLVAddMetadata(IMediaStream paramIMediaStream, Map<String, Object> paramMap);
-
-	public abstract IMediaCasterValidateMediaCaster getMediaCasterValidator();
-
-	public abstract void setMediaCasterValidator(IMediaCasterValidateMediaCaster paramIMediaCasterValidateMediaCaster);
-
-	public abstract void touch();
-
-	public abstract long getLastTouchTime();
-
-	public abstract int getApplicationInstanceTouchTimeout();
-
-	public abstract void setApplicationInstanceTouchTimeout(int paramInt);
-
-	public abstract int getRTSPSessionTimeout();
-
-	public abstract void setRTSPSessionTimeout(int paramInt);
-
-	public abstract int getRTSPMaximumPendingWriteBytes();
-
-	public abstract void setRTSPMaximumPendingWriteBytes(int paramInt);
-
-	public abstract void addMediaReaderListener(IMediaReaderActionNotify paramIMediaReaderActionNotify);
-
-	public abstract void removeMediaReaderListener(IMediaReaderActionNotify paramIMediaReaderActionNotify);
-
-	public abstract void notifyMediaReaderCreate(IMediaReader paramIMediaReader);
-
-	public abstract void notifyMediaReaderInit(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
-
-	public abstract void notifyMediaReaderOpen(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
-
-	public abstract void notifyMediaReaderExtractMetaData(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
-
-	public abstract void notifyMediaReaderClose(IMediaReader paramIMediaReader, IMediaStream paramIMediaStream);
-
-	public abstract String getRTSPBindIpAddress();
-
-	public abstract void setRTSPBindIpAddress(String paramString);
-
-	public abstract String getRTSPConnectionIpAddress();
-
-	public abstract void setRTSPConnectionIpAddress(String paramString);
-
-	public abstract String getRTSPConnectionAddressType();
-
-	public abstract void setRTSPConnectionAddressType(String paramString);
-
-	public abstract String getRTSPOriginIpAddress();
-
-	public abstract void setRTSPOriginIpAddress(String paramString);
-
-	public abstract String getRTSPOriginAddressType();
-
-	public abstract void setRTSPOriginAddressType(String paramString);
-
-	public abstract void addLiveStreamPacketizerListener(ILiveStreamPacketizerActionNotify paramILiveStreamPacketizerActionNotify);
-
-	public abstract void removeLiveStreamPacketizerListener(ILiveStreamPacketizerActionNotify paramILiveStreamPacketizerActionNotify);
-
-	public abstract void notifyLiveStreamPacketizerCreate(ILiveStreamPacketizer paramILiveStreamPacketizer, String paramString);
-
-	public abstract void notifyLiveStreamPacketizerDestroy(ILiveStreamPacketizer paramILiveStreamPacketizer);
-
-	public abstract void notifyLiveStreamPacketizerInit(ILiveStreamPacketizer paramILiveStreamPacketizer, String paramString);
-
-	public abstract boolean isValidateFMLEConnections();
-
-	public abstract void setValidateFMLEConnections(boolean paramBoolean);
-
-	public abstract void addLiveStreamTranscoderListener(ILiveStreamTranscoderNotify paramILiveStreamTranscoderNotify);
-
-	public abstract void removeLiveStreamTranscoderListener(ILiveStreamTranscoderNotify paramILiveStreamTranscoderNotify);
-
-	public abstract void notifyLiveStreamTranscoderCreate(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
-
-	public abstract void notifyLiveStreamTranscoderDestroy(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
-
-	public abstract void notifyLiveStreamTranscoderInit(ILiveStreamTranscoder paramILiveStreamTranscoder, IMediaStream paramIMediaStream);
-
-	public abstract boolean containsLiveStreamTranscoder(String paramString);
-
-	public abstract String getLiveStreamTranscoderList();
-
-	public abstract void setLiveStreamTranscoderList(String paramString);
-
-	public abstract ILiveStreamTranscoderControl getLiveStreamTranscoderControl();
-
-	public abstract void setLiveStreamTranscoderControl(ILiveStreamTranscoderControl paramILiveStreamTranscoderControl);
-
-	public abstract LiveStreamTranscoderApplicationContext getTranscoderApplicationContext();
-
-	public abstract WMSProperties getDvrProperties();
-
-	public abstract DvrApplicationContext getDvrApplicationContext();
-
-	public abstract ILiveStreamDvrRecorderControl getLiveStreamDvrRecorderControl();
-
-	public abstract void setLiveStreamDvrRecorderControl(ILiveStreamDvrRecorderControl paramILiveStreamDvrRecorderControl);
-
-	public abstract String getDvrRecorderList();
-
-	public abstract void setDvrRecorderList(String paramString);
-
-	public abstract void addDvrRecorderListener(ILiveStreamDvrRecorderActionNotify paramILiveStreamDvrRecorderActionNotify);
-
-	public abstract void removeDvrRecorderListener(ILiveStreamDvrRecorderActionNotify paramILiveStreamDvrRecorderActionNotify);
-
-	public abstract void notifyLiveStreamDvrRecorderCreate(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder, String paramString);
-
-	public abstract void notifyLiveStreamDvrRecorderInit(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder, String paramString);
-
-	public abstract void notifyLiveStreamDvrRecorderDestroy(ILiveStreamDvrRecorder paramILiveStreamDvrRecorder);
-
-	public abstract void addDvrStreamManagerListener(IDvrStreamManagerActionNotify paramIDvrStreamManagerActionNotify);
-
-	public abstract void removeDvrStreamManagerListener(IDvrStreamManagerActionNotify paramIDvrStreamManagerActionNotify);
-
-	public abstract void notifyDvrStreamManagerCreate(IDvrStreamManager paramIDvrStreamManager, String paramString);
-
-	public abstract void notifyDvrStreamManagerInit(IDvrStreamManager paramIDvrStreamManager);
-
-	public abstract void notifyDvrStreamManagerDestroy(IDvrStreamManager paramIDvrStreamManager);
-
-	public abstract int getMediaReaderContentType(String paramString);
-
-	public abstract IMediaListProvider getMediaListProvider();
-
-	public abstract void setMediaListProvider(IMediaListProvider paramIMediaListProvider);
-
-	public abstract int getMediacasterRTPRTSPRTPTransportMode();
-
-	public abstract void setMediacasterRTPRTSPRTPTransportMode(int paramInt);
-
-	public abstract boolean[] getProtocolUsage();
-
-	public abstract void getProtocolUsage(boolean[] paramArrayOfBoolean);
-
-	public abstract boolean isDebugAppTimeout();
-
-	public abstract void setDebugAppTimeout(boolean paramBoolean);
-
-	public abstract void addRTPListener(IRTPSessionNotify paramIRTPSessionNotify);
-
-	public abstract void removeRTPListener(IRTPSessionNotify paramIRTPSessionNotify);
-
-	public abstract void notifyRTPSessionCreate(RTPSession paramRTPSession);
-
-	public abstract void notifyRTPSessionDestroy(RTPSession paramRTPSession);
-
-	public abstract void addHTTPListener(IHTTPSessionNotify paramIHTTPSessionNotify);
-
-	public abstract void removeHTTPListener(IHTTPSessionNotify paramIHTTPSessionNotify);
-
-	public abstract void notifyHTTPSessionCreate(IHTTPStreamerSession paramIHTTPStreamerSession);
-
-	public abstract void notifyHTTPSessionDestroy(IHTTPStreamerSession paramIHTTPStreamerSession);
-
-	public abstract List<MediaCacheSourceFilter> getMediaCacheFilters();
-
-	public abstract boolean isMediaCacheSourceAllowed(String paramString);
-
-	public abstract List<IPushPublishSession> getPushPublishSessions(IMediaStream paramIMediaStream);
-
-	public abstract List<IPushPublishSession> getPushPublishSessions();
-
-	public abstract void addPushPublishSession(IMediaStream paramIMediaStream, IPushPublishSession paramIPushPublishSession);
-
-	public abstract void removePushPublishSession(IMediaStream paramIMediaStream, IPushPublishSession paramIPushPublishSession);
-
-	public abstract void removePushPublishSessions(IMediaStream paramIMediaStream);
-
-	public abstract void addPushPublishSessionListener(IPushPublishSessionNotify paramIPushPublishSessionNotify);
-
-	public abstract void removePushPublishSessionListener(IPushPublishSessionNotify paramIPushPublishSessionNotify);
-
-	public abstract void notifyPushPublishSessionCreate(String paramString, IMediaStream paramIMediaStream,
+	public void notifyPushPublishSessionCreate(String paramString, IMediaStream paramIMediaStream,
 			IPushPublishSession paramIPushPublishSession);
 
-	public abstract void notifyPushPublishSessionDestroy(String paramString, IMediaStream paramIMediaStream,
+	public void notifyPushPublishSessionDestroy(String paramString, IMediaStream paramIMediaStream,
 			IPushPublishSession paramIPushPublishSession);
 
-	public abstract int getPushPublishSessionCount();
+	public void notifyRTPSessionCreate(RTPSession paramRTPSession);
 
-	public abstract WMSProperties getStreamRecorderProperties();
+	public void notifyRTPSessionDestroy(RTPSession paramRTPSession);
+
+	public void parseAllowDomains(String paramString);
+
+	public String readAppInstConfig(String paramString);
+
+	public void registerPlayRTPSession(RTPSession paramRTPSession);
+
+	/**
+	 * This can be used to remove the listener that you have previously added using @{see {@link #addClientListener(IClientNotify)}
+	 *  
+	 * @param clientListener listener object to be removed
+	 */
+	public void removeClientListener(IClientNotify clientListener);
+
+	public void removeDvrRecorderListener(ILiveStreamDvrRecorderActionNotify paramILiveStreamDvrRecorderActionNotify);
+
+	public void removeDvrStreamManagerListener(IDvrStreamManagerActionNotify paramIDvrStreamManagerActionNotify);
+
+	public void removeHTTPListener(IHTTPSessionNotify paramIHTTPSessionNotify);
+
+	public void removeHTTPStreamerSession(IHTTPStreamerSession paramIHTTPStreamerSession);
+
+	public void removeLiveStreamPacketizerListener(ILiveStreamPacketizerActionNotify paramILiveStreamPacketizerActionNotify);
+
+	public void removeLiveStreamTranscoderListener(ILiveStreamTranscoderNotify paramILiveStreamTranscoderNotify);
+
+	public void removeMediaCasterListener(IMediaCasterNotify paramIMediaCasterNotify);
+
+	public void removeMediaReaderListener(IMediaReaderActionNotify paramIMediaReaderActionNotify);
+
+	public void removeMediaStreamListener(IMediaStreamNotify paramIMediaStreamNotify);
+
+	public void removeMediaWriterListener(IMediaWriterActionNotify paramIMediaWriterActionNotify);
+
+	public void removeModuleListener(IModuleNotify paramIModuleNotify);
+
+	public void removePlayStreamByName(IMediaStream paramIMediaStream);
+
+	public void removePublisher(Publisher paramPublisher);
+
+	public void removePushPublishSession(IMediaStream paramIMediaStream, IPushPublishSession paramIPushPublishSession);
+
+	public void removePushPublishSessionListener(IPushPublishSessionNotify paramIPushPublishSessionNotify);
+
+	public void removePushPublishSessions(IMediaStream paramIMediaStream);
+
+	public void removeRTPListener(IRTPSessionNotify paramIRTPSessionNotify);
+
+	public void removeRTPSession(RTPSession paramRTPSession);
+
+	public void removeSharedObjectListener(ISharedObjectNotify paramISharedObjectNotify, boolean paramBoolean);
+
+	public boolean resetMediaCasterStream(String paramString);
+
+	public boolean resetMediaCasterStream(String paramString1, String paramString2);
+
+	public void setAcceptConnection(boolean paramBoolean);
+
+	public void setAllowDomains(String[] paramArrayOfString);
+
+	public void setApplicationInstanceTouchTimeout(int paramInt);
+
+	public void setApplicationTimeout(int paramInt);
+
+	public void setClientIdleFrequency(int paramInt);
+
+	public void setDebugAppTimeout(boolean paramBoolean);
+
+	public void setDvrRecorderList(String paramString);
+
+	public void setHTTPStreamerList(String paramString);
+
+	public void setLiveStreamDvrRecorderControl(ILiveStreamDvrRecorderControl paramILiveStreamDvrRecorderControl);
+
+	public void setLiveStreamPacketizerControl(ILiveStreamPacketizerControl paramILiveStreamPacketizerControl);
+
+	public void setLiveStreamPacketizerList(String paramString);
+
+	public void setLiveStreamTranscoderControl(ILiveStreamTranscoderControl paramILiveStreamTranscoderControl);
+
+	public void setLiveStreamTranscoderList(String paramString);
+
+	public void setMaximumPendingReadBytes(int paramInt);
+
+	public void setMaximumPendingWriteBytes(int paramInt);
+
+	public void setMaximumSetBufferTime(int paramInt);
+
+	public void setMaxStorageDirDepth(int paramInt);
+
+	public void setMediacasterRTPRTSPRTPTransportMode(int paramInt);
+
+	public void setMediaCasterValidator(IMediaCasterValidateMediaCaster paramIMediaCasterValidateMediaCaster);
+
+	public void setMediaListProvider(IMediaListProvider paramIMediaListProvider);
+
+	public void setName(String paramString);
+
+	public void setPingTimeout(int paramInt);
+
+	public void setRepeaterOriginUrl(String paramString);
+
+	public void setRepeaterQueryString(String paramString);
+
+	public void setRsoStorageDir(String paramString);
+
+	public void setRTPAVSyncMethod(int paramInt);
+
+	public void setRTPIdleFrequency(int paramInt);
+
+	public void setRTPMaxRTCPWaitTime(int paramInt);
+
+	public void setRTPPlayAuthenticationMethod(String paramString);
+
+	public void setRTPPublishAuthenticationMethod(String paramString);
+
+	public void setRTSPBindIpAddress(String paramString);
+
+	public void setRTSPConnectionAddressType(String paramString);
+
+	public void setRTSPConnectionIpAddress(String paramString);
+
+	public void setRTSPMaximumPendingWriteBytes(int paramInt);
+
+	public void setRTSPOriginAddressType(String paramString);
+
+	public void setRTSPOriginIpAddress(String paramString);
+
+	public void setRTSPSessionTimeout(int paramInt);
+
+	public void setSharedObjectReadAccess(String paramString);
+
+	public void setSharedObjectWriteAccess(String paramString);
+
+	public void setStreamAudioSampleAccess(String paramString);
+
+	public void setStreamFileMapper(IMediaStreamFileMapper paramIMediaStreamFileMapper);
+
+	public void setStreamKeyDir(String paramString);
+
+	public void setStreamNameAliasProvider(IMediaStreamNameAliasProvider paramIMediaStreamNameAliasProvider);
+
+	public void setStreamReadAccess(String paramString);
+
+	public void setStreamStorageDir(String paramString);
+
+	public void setStreamType(String paramString);
+
+	public void setStreamVideoSampleAccess(String paramString);
+
+	public void setStreamWriteAccess(String paramString);
+
+	public void setValidateFMLEConnections(boolean paramBoolean);
+
+	public void setValidationFrequency(int paramInt);
+
+	public void setVODTimedTextProviderList(String paramString);
+
+	public void shutdown(boolean paramBoolean1, boolean paramBoolean2);
+
+	/**
+	 * Shut down a particular RTMP client. (Not any other!)
+	 * @param paramIClient the client that you want to shut down
+	 */
+	public void shutdownClient(IClient paramIClient);
+
+	/**
+	 * Start a stream with the given name. You need to have a stream file that contains the URL to the stream (RTSP URL, SHOUTcast URL, full RTMP URL),
+	 * and streamName has to match the name of that file, e.g. football.stream.
+	 * 
+	 * See this forum thread for some more details: http://www.wowza.com/forums/content.php?166-Sample-code-to-use-MediaCaster-API-to-start-stop-a-stream
+	 * 
+	 * @param streamName name of the stream to start
+	 * @param mediaCasterType type of the stream, one of these magic Strings: rtp,shoutcast,liverepeater, etc
+	 * @return true if the stream could be started, false otherwise
+	 */
+	public boolean startMediaCasterStream(String streamName, String mediaCasterType);
+
+	/**
+	 * Start a stream with the given name. You need to have a stream file that contains the URL to the stream (RTSP URL, SHOUTcast URL, full RTMP URL),
+	 * and streamName has to match the name of that file, e.g. football.stream.
+	 * 
+	 * See this forum thread for some more details: http://www.wowza.com/forums/content.php?166-Sample-code-to-use-MediaCaster-API-to-start-stop-a-stream
+	 * 
+	 * @param streamName name of the stream to start
+	 * @param streamExt stream extension according to official docs, but not sure what they mean. Do you know?
+	 * @param mediaCasterType type of the stream, one of these magic Strings: rtp,shoutcast,liverepeater, etc
+	 * @return true if the stream could be started, false otherwise
+	 */
+	public boolean startMediaCasterStream(String streamName, String streamExt, String mediaCasterType);
+
+	/**
+	 * This can be used to stop a particular stream.
+	 * 
+	 * See this forum thread for some more details: http://www.wowza.com/forums/content.php?166-Sample-code-to-use-MediaCaster-API-to-start-stop-a-stream
+	 * 
+	 * @param streamName name of the stream to stop
+	 */
+	public void stopMediaCasterStream(String streamName);
+
+	public void touch();
+
+	public boolean writeAppInstConfig(String paramString1, String paramString2);
 	
 }
