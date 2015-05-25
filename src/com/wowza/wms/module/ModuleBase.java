@@ -34,7 +34,7 @@ public class ModuleBase {
 	/**
 	 * This method is invoked by Wowza when your application stops.
 	 * This happens when (1) the whole server is shutting down (2) your application is stopped from management interface
-	 * @param appInstance
+	 * @param appInstance the application instance that is being stopped
 	 */
 	public void onAppStop(IApplicationInstance appInstance) {
 	}
@@ -52,7 +52,7 @@ public class ModuleBase {
 	 * This method is invoked upon every HTTP request that comes in. This means separate invocation for
 	 * the m3u8 file, and an other one one for the chunklist file.
 	 * 
-	 * The passed reqContext has a {@link com.wowza.wms.httpstreamer.model.IHTTPStreamerRequestContext.#getRequestType()} method that you can call and check what happened exactly.
+	 * The passed reqContext has a {@link com.wowza.wms.httpstreamer.model.IHTTPStreamerRequestContext#getRequestType()} method that you can call and check what happened exactly.
 	 * 
 	 * @param httpSession an object representing the known details about the session
 	 * @param reqContext a context object representing some other details about the call
@@ -125,8 +125,8 @@ public class ModuleBase {
 	
 	/**
 	 * This is called upon stream creation. Be careful <code>stream.getName()</code> will return null!
-	 * It is the point where you can add your {@link com.wowza.wms.stream.IMediaStreamActionNotify} instance on the stream by calling
-	 * {@link com.wowza.wms.stream.IMediaStream.#addClientListener()}
+	 * It is the point where you can add your @link com.wowza.wms.stream.IMediaStreamActionNotify instance on the stream by calling
+	 * {@link com.wowza.wms.stream.IMediaStream#addClientListener(com.wowza.wms.stream.IMediaStreamActionNotify)}
 	 * 	@param stream the stream object
 	 */
 	public void onStreamCreate(IMediaStream stream) {

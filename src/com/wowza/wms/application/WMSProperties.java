@@ -1,7 +1,8 @@
 package com.wowza.wms.application;
 
 /**
- * This class contains the properties that you can define in the Application.xml file's @{code <Properties>} section, acting more or less like a {@link java.util.Map}
+ * This class wraps the properties that you can define for your server, application, etc. It is acting more or less like a {@link java.util.Map}
+ * A typical example is the Application.xml file's @{code Properties} section. 
  * Some interesting material about prefixing properties: http://wejn.com/blog/2013/04/on-multiple-wowza-module-instances/
  * 
  * This article is an other highly recommended one, which reveals a security issue related to these properties:

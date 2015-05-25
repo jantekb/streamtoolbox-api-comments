@@ -61,7 +61,7 @@ import edu.emory.mathcs.backport.java.util.concurrent.locks.WMSReadWriteLock;
 public interface IApplicationInstance {
 
 	/**
-	 * Attach an instence of {@see IClientNotify} to this application instance, which can be used to get notified when a new client is connected, disconnected, accepted or rejected.
+	 * Attach an instence of @see com.wowza.wms.client.IClientNotify to this application instance, which can be used to get notified when a new client is connected, disconnected, accepted or rejected.
 	 * Be careful, this only works for RTMP (Flash) clients.
 	 * 
 	 * @param clientListener listener instance to add
@@ -244,7 +244,7 @@ public interface IApplicationInstance {
 
 	/**
 	 * The name of the application instance, which is by default {@code _definst_}.
-	 * @return
+	 * @return name of the application instance
 	 */
 	public String getName();
 
@@ -256,6 +256,10 @@ public interface IApplicationInstance {
 
 	public List<IMediaStream> getPlayStreamsByName(String paramString);
 
+	/**
+	 * Returns the properties of the application instance, that you can configure in the <code>Application.xml</code> file's Properties section.
+	 * @return the application instance level properties
+	 */
 	public WMSProperties getProperties();
 
 	public boolean[] getProtocolUsage();
@@ -641,4 +645,10 @@ public interface IApplicationInstance {
 
 	public boolean writeAppInstConfig(String paramString1, String paramString2);
 	
+	/**
+	 * Returns true if the stream type for the particular application instance is a live stream type.
+	 * @since 4.1.2
+	 * @return true if the stream type is live
+	 */
+	public boolean isLive();
 }

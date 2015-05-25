@@ -73,11 +73,10 @@ Document title and Copyright styles
     overflow:hidden;
 }
 .aboutLanguage {
-    float:right;
-    padding:0px 21px;
-    font-size:.8em;
+    padding:0px 10px;
+    font-size:.95em;
     z-index:200;
-    margin-top:-7px;
+    margin-top:-3px;
 }
 .legalCopy {
     margin-left:.5em;
@@ -469,4 +468,11 @@ h1.hidden {
 }
 .strong {
     font-weight:bold;
+}
+.skipNav, .subNav {
+	display: none;
+}
+.bottomNav .navList {
+	display: none;
+}
 }
