@@ -6,7 +6,7 @@ package com.wowza.util;
 import java.util.Map;
 
 /**
- *  A bunch of useful methods that did not fit anywhere else
+ *  A bunch of useful methods that did not fit anywhere else.
  */
 public class SystemUtils {
 	
