@@ -4,3 +4,4 @@ doc
 .gradle
 .settings
 .project
+.classpath

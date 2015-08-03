@@ -30,5 +30,12 @@ public class SystemUtils {
 	public static String expandEnvironmentVariables(String inValue, Map valueMap) {
 		return null;
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static byte[] getMACAddress() {
+		return null;
+	}
 }
