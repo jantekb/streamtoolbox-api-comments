@@ -38,4 +38,62 @@ public class SystemUtils {
 	public static byte[] getMACAddress() {
 		return null;
 	}
+	
+	/**
+	 * 
+	 */
+	public static void addBouncyCastleSecurityProvider() {
+		
+	}
+	
+	/**
+	 * 
+	 * @param paramLong
+	 * @return
+	 */
+	public static long toNTPTime(long paramLong) {
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static long getCpuTime() {
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static long getUserTime() {
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static long getSystemTime() {
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @param paramString
+	 * @return
+	 */
+	public static String getLinuxSocketParam(String paramString) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @author Isti
+	 *
+	 */
+	public static class ReplaceItem {
+		
+	}
 }
