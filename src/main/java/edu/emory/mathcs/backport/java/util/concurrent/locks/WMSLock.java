@@ -1,5 +1,5 @@
 package edu.emory.mathcs.backport.java.util.concurrent.locks;
 
-public class WMSReadWriteLock {
+public class WMSLock {
 
 }
