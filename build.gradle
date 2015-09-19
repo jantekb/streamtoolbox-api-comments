@@ -13,5 +13,20 @@ task doc(type: Javadoc) {
 }
 
 clean {
-	delete 'doc'
+	delete 'doc','friendly'
 }
+
+task friendly(type: Copy, dependsOn: 'doc') {
+	into 'friendly'
+	from 'doc'
+	filter { line ->
+		switch (line) {
+			case ~/<head>/: return '<head>\n<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+//			case ~/.+stylesheet.css.+/: return '';
+//			case ~/<\/body>/: return '<link rel="stylesheet" type="text/css" href="/api/stylesheet.css" title="Style">\n</body>';
+			default: return line;
+		}
+	}
+}
+
+friendly.mustRunAfter doc

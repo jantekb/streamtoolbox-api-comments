@@ -1,6 +1,7 @@
 bin
 build
 doc
+friendly
 .gradle
 .settings
 .project

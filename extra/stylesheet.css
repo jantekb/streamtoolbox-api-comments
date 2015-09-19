@@ -53,6 +53,7 @@ ul {
 }
 code, tt {
     font-size:1.2em;
+    word-break: break-word;
 }
 dt code {
     font-size:1.2em;
@@ -415,7 +416,6 @@ td.colOne a:link, td.colOne a:active, td.colOne a:visited, td.colOne a:hover, td
 }
 td.colFirst, th.colFirst {
     border-left:1px solid #9eadc0;
-    white-space:nowrap;
 }
 td.colLast, th.colLast {
     border-right:1px solid #9eadc0;
