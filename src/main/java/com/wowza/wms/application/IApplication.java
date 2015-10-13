@@ -16,16 +16,28 @@ public interface IApplication {
 
 	public String getApplicationPath();
 
+	/**
+	 * Returns the full absolute path to the Application.xml file which contains all the configuration
+	 * @return path to Application.xml
+	 */
 	public String getConfigPath();
 
 	public IApplicationInstance getAppInstance(String paramString);
 
 	public boolean isAppInstanceLoaded(String paramString);
 
+	/**
+	 * Returns the logical name of the application, as set in the configuration
+	 * @return
+	 */
 	public String getName();
 
-	public void setName(String paramString);
+	public void setName(String name);
 
+	/**
+	 * Returns the reference to the @see {@link IVHost} in which this application lives
+	 * @return reference to the surrounding VHost
+	 */
 	public IVHost getVHost();
 
 	public WMSProperties getProperties();
@@ -48,15 +60,34 @@ public interface IApplication {
 
 	public double getTimeRunningSeconds();
 
+	/**
+	 * The list of application instance names that exist. By default the instance <code>_definst_</code> is instantiated for each running application.
+	 * @return list of application instance names
+	 */
 	public List<String> getAppInstanceNames();
 
 	public void removeAppInstance(IApplicationInstance paramIApplicationInstance);
 
 	public void shutdownAppInstance(String paramString);
 
-	public String readAppConfig(String paramString);
+	/**
+	 * This returns the whole content of the Application.xml file, just as if you read it from the file itself. 
+	 * There is a parameter which seems to be unused, no matter what you pass in you get the same output. The returned
+	 * string contains new lines and even the comments are there.
+	 * 
+	 * @param apparentlyUnusedParam no idea, you can pass in anything, even <code>null</code>
+	 * @return the content of the Application.xml file for this application
+	 */
+	public String readAppConfig(String apparentlyUnusedParam);
 
-	public boolean writeAppConfig(String paramString1, String paramString2);
+	/**
+	 * According to <a href="http://www.wowza.com/forums/showthread.php?39410-how-to-use-writeAppConfig">this forum post</a> this does not write anything to the disk.
+	 * 
+	 * @param applicationName
+	 * @param data
+	 * @return
+	 */
+	public boolean writeAppConfig(String applicationName, String data);
 
 	public void getProtocolUsage(boolean[] paramArrayOfBoolean);
 
