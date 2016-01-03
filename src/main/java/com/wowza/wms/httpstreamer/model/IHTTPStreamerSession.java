@@ -28,4 +28,9 @@ public interface IHTTPStreamerSession {
 	 */
 	boolean setSecure(boolean isSecure);
 	
+	/**
+	 * @since 4.3.0.02 build 17246
+	 * @return
+	 */
+	String getCORSHeaders();
 }

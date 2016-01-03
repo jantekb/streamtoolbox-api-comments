@@ -1,5 +1,7 @@
 package com.wowza.wms.server;
 
+import java.util.Date;
+
 public class ReleaseInfo {
 
 	/**
@@ -16,6 +18,14 @@ public class ReleaseInfo {
 	 * @return the build number of Wowza Streaming Engine
 	 */
 	public static String getBuildNumber() {
+		return null;
+	}
+	
+	public static Date getBuildDate() {
+		return null;
+	}
+	
+	public static String getProject() {
 		return null;
 	}
 }
