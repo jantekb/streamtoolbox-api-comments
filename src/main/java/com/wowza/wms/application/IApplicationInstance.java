@@ -535,6 +535,13 @@ public interface IApplicationInstance {
 
 	public void setMediaCasterValidator(IMediaCasterValidateMediaCaster paramIMediaCasterValidateMediaCaster);
 
+	/**
+	 * Sets a custom media list provider for this application instance that will catch all requests to streams with the amlst: prefix (for API based MediaList).
+	 * This allows you to programmatically define the streams in a stream name group with all relevant parameters. For further information and example check out:
+	 * https://www.wowza.com/forums/content.php?330-How-to-use-Java-API-calls-to-resolve-SMIL-file-requests
+	 *   
+	 * @param paramIMediaListProvider your custom media list provider implementation
+	 */
 	public void setMediaListProvider(IMediaListProvider paramIMediaListProvider);
 
 	public void setName(String paramString);
