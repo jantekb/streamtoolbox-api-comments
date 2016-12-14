@@ -9,4 +9,36 @@ public class TranscoderStreamDestinationVideo extends TranscoderStreamDestinatio
 	 */
 	void setPadding(int[] paddings) {
 	}
+	
+	/**
+	 * Returns the height defined in the transcoder template for a specific rendition (<code>FrameSize / Height</code> in the xml)
+	 * @return the rendition height
+	 */
+	int getFrameSizeHeight() {
+		return 0;
+	}
+	
+	/**
+	 * Returns the width defined in the transcoder template for a specific rendition (<code>FrameSize / Width</code> in the xml)
+	 * @return the rendition width
+	 */
+	int getFrameSizeWidth() {
+		return 0;
+	}
+	
+	/**
+	 * Returns the height determined when the source was decoded
+	 * @return the decoded frame height
+	 */
+	int getFrameHeight() {
+		return 0;
+	}
+	
+	/**
+	 * Returns the width determined when the source was decoded
+	 * @return the decoded frame width
+	 */
+	int getFrameWidth() {
+		return 0;
+	}
 }
